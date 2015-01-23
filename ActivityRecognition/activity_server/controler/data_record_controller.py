@@ -55,7 +55,12 @@ def store_acceleration_record(acceleration_object, data_object):
             raise Exception("Invalid json format")
 
 
-def store_wifi_record(wifi_object, data_object):
-    for ssid in wifi_object:
-        wifi_record = WifiRecord(data_record=data_object, wifi_name=ssid)
-        wifi_record.save()
+def store_wifi_record(wifi_objects, data_object):
+    for wifi_object in wifi_objects:
+        if 'ssids' in wifi_object.keys() and 'timestamp' in wifi_object.keys():
+            timestamp = wifi_object.get('timestamp')
+            for ssid in wifi_object.get('ssids'):
+                wifi_record = WifiRecord(data_record=data_object, time_stamp=timestamp, wifi_name=ssid)
+                wifi_record.save()
+        else:
+            raise Exception("Invalid json format")

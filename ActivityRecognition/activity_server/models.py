@@ -7,6 +7,7 @@ class DataRecord(models.Model):
 
 
 class WifiRecord(models.Model):
+    time_stamp = models.BigIntegerField()
     data_record = models.ForeignKey(DataRecord)
     wifi_name = models.CharField(max_length=32)
 
@@ -16,7 +17,6 @@ class LocationRecord(models.Model):
     time_stamp = models.BigIntegerField()
     lat = models.DecimalField(max_digits=20, decimal_places=17)
     lon = models.DecimalField(max_digits=20, decimal_places=17)
-    #accuracy = models.DecimalField(max_digits=20, decimal_places=15)
 
 
 class AcceleratorRecord(models.Model):
