@@ -1,4 +1,4 @@
-from activity_server.models import DataRecord, LocationRecord, AcceleratorRecord, WifiRecord
+from activity_server.models import DataRecord, LocationRecord, AcceleratorRecord, WifiRecord, GyroscopeRecord
 from datetime import datetime
 from decimal import Decimal
 
@@ -7,6 +7,7 @@ def store_data_record(json_object):
 
     if 'uuid' in json_object.keys() and \
        'acceleration' in json_object.keys() and \
+       'gyroscope' in json_object.keys() and \
        'location' in json_object.keys() and \
        'wifi' in json_object.keys():
 
@@ -15,6 +16,7 @@ def store_data_record(json_object):
 
         store_location_record(json_object.get('location'), record)
         store_acceleration_record(json_object.get('acceleration'), record)
+        store_gyroscope_record(json_object.get('gyroscope'), record)
         store_wifi_record(json_object.get('wifi'), record)
 
     else:
@@ -50,6 +52,23 @@ def store_acceleration_record(acceleration_object, data_object):
                                                     x=Decimal.from_float(acceleration_object[i].get('x')),
                                                     y=Decimal.from_float(acceleration_object[i].get('y')),
                                                     z=Decimal.from_float(acceleration_object[i].get('z')))
+            acceleration_record.save()
+        else:
+            raise Exception("Invalid json format")
+
+
+def store_gyroscope_record(gyroscope_object, data_object):
+    for i in range(len(gyroscope_object)):
+        if 'x' in gyroscope_object[i].keys() and \
+           'y' in gyroscope_object[i].keys() and \
+           'z' in gyroscope_object[i].keys() and \
+           'timestamp' in gyroscope_object[i].keys():
+
+            acceleration_record = GyroscopeRecord(data_record=data_object,
+                                                  time_stamp=gyroscope_object[i].get('timestamp'),
+                                                  x=Decimal.from_float(gyroscope_object[i].get('x')),
+                                                  y=Decimal.from_float(gyroscope_object[i].get('y')),
+                                                  z=Decimal.from_float(gyroscope_object[i].get('z')))
             acceleration_record.save()
         else:
             raise Exception("Invalid json format")

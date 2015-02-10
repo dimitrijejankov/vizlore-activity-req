@@ -15,9 +15,6 @@ class HomeView(View):
 
 class RESTView(View):
     def post(self, request, *args, **kwargs):
-
-        o = json.loads(request.body)
-
         try:
             store_data_record(json.loads(request.body))
         except ValueError, e:
@@ -26,6 +23,9 @@ class RESTView(View):
         response = HttpResponse('This is POST request')
         response.status_code = 200
         return response
+
+    def get(self, instance, owner):
+        pass
 
     @csrf_exempt
     def dispatch(self, *args, **kwargs):
