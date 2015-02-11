@@ -291,7 +291,7 @@
 
             $.ajax(
                     {
-                        url: 'http://localhost:55555/rest/',
+                        url: 'http://192.168.11.250:55555/rest/',
                         type: 'POST',
                         processData: false,
                         contentType: 'application/json; charset=utf-8',
@@ -316,15 +316,9 @@
 
         function test_get() {
 
-            var data = {uuid: 123};
-
             $.ajax({
-                        url: 'http://localhost:55555/rest/',
+                        url: 'http://192.168.11.250:55555/rest/?uuid=46cf6430e66df4b4',
                         type: 'GET',
-                        processData: false,
-                        contentType: 'application/json; charset=utf-8',
-                        data: JSON.stringify(data),
-                        dataType: 'json',
                         async: false,
                         complete: function (result) {
                             if (result.status == 0) {

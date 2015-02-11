@@ -29,7 +29,10 @@ class RESTView(View):
     def get(self, request, *args, **kwargs):
 
         try:
-            record = find_record(123)
+            if 'uuid' not in request.GET:
+                raise Exception("Bad request")
+
+            record = find_record(request.GET['uuid'])
 
             response = HttpResponse("{date_time:'%s', "
                                     "walking:%s, sitting:%s, "

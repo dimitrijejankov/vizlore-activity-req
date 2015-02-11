@@ -12,7 +12,7 @@ def find_record(uuid):
 
     record = DataRecord.objects.filter(user_id=uuid).latest('record_date')
 
-    if record.activity_calculated:
+    if False:#record.activity_calculated:
         return record
     else:
         acceleration_data = AcceleratorRecord.objects.filter(data_record=record.id).order_by("time_stamp")
