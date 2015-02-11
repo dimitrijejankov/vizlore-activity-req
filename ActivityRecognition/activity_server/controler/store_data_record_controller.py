@@ -11,7 +11,7 @@ def store_data_record(json_object):
        'location' in json_object.keys() and \
        'wifi' in json_object.keys():
 
-        record = DataRecord(user_id=json_object.get('uuid'), record_date=datetime.now())
+        record = DataRecord(user_id=json_object.get('uuid'), record_date=datetime.now(), activity=0)
         record.save()
 
         store_location_record(json_object.get('location'), record)
