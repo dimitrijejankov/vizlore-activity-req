@@ -1,6 +1,5 @@
 from activity_server.models import DataRecord, LocationRecord, AcceleratorRecord, WifiRecord, GyroscopeRecord
 from datetime import datetime
-from decimal import Decimal
 
 
 def store_data_record(json_object):
@@ -11,7 +10,17 @@ def store_data_record(json_object):
        'location' in json_object.keys() and \
        'wifi' in json_object.keys():
 
-        record = DataRecord(user_id=json_object.get('uuid'), record_date=datetime.now(), activity=0)
+        record = DataRecord(user_id=json_object.get('uuid'),
+                            record_date=datetime.now(),
+                            activity_calculated=False,
+                            walking=0.0,
+                            sitting=0.0,
+                            standing=0.0,
+                            jogging=0.0,
+                            biking=0.0,
+                            upstairs=0.0,
+                            downstairs=0.0
+                            )
         record.save()
 
         store_location_record(json_object.get('location'), record)
@@ -31,8 +40,8 @@ def store_location_record(locations_object, data_object):
             if "longitude" in coords_json.keys() and "latitude" in coords_json.keys():
                 location_record = LocationRecord(data_record=data_object,
                                                  time_stamp=location_record_json.get('timestamp'),
-                                                 lat=Decimal.from_float(coords_json.get('latitude')),
-                                                 lon=Decimal.from_float(coords_json.get('longitude')))
+                                                 lat=coords_json.get('latitude'),
+                                                 lon=coords_json.get('longitude'))
                 location_record.save()
             else:
                 raise Exception("Invalid json format")
@@ -49,9 +58,9 @@ def store_acceleration_record(acceleration_object, data_object):
 
             acceleration_record = AcceleratorRecord(data_record=data_object,
                                                     time_stamp=acceleration_object[i].get('timestamp'),
-                                                    x=Decimal.from_float(acceleration_object[i].get('x')),
-                                                    y=Decimal.from_float(acceleration_object[i].get('y')),
-                                                    z=Decimal.from_float(acceleration_object[i].get('z')))
+                                                    x=acceleration_object[i].get('x'),
+                                                    y=acceleration_object[i].get('y'),
+                                                    z=acceleration_object[i].get('z'))
             acceleration_record.save()
         else:
             raise Exception("Invalid json format")
@@ -66,9 +75,9 @@ def store_gyroscope_record(gyroscope_object, data_object):
 
             acceleration_record = GyroscopeRecord(data_record=data_object,
                                                   time_stamp=gyroscope_object[i].get('timestamp'),
-                                                  x=Decimal.from_float(gyroscope_object[i].get('x')),
-                                                  y=Decimal.from_float(gyroscope_object[i].get('y')),
-                                                  z=Decimal.from_float(gyroscope_object[i].get('z')))
+                                                  x=gyroscope_object[i].get('x'),
+                                                  y=gyroscope_object[i].get('y'),
+                                                  z=gyroscope_object[i].get('z'))
             acceleration_record.save()
         else:
             raise Exception("Invalid json format")
