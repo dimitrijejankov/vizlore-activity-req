@@ -21,22 +21,41 @@ def load_data_set(filename):
     lp_buffer_acc_y = []
     lp_buffer_acc_z = []
 
+    lp_buffer_gyo_x = []
+    lp_buffer_gyo_y = []
+    lp_buffer_gyo_z = []
+
     rp_buffer_acc_x = []
     rp_buffer_acc_y = []
     rp_buffer_acc_z = []
+
+    rp_buffer_gyo_x = []
+    rp_buffer_gyo_y = []
+    rp_buffer_gyo_z = []
 
     wr_buffer_acc_x = []
     wr_buffer_acc_y = []
     wr_buffer_acc_z = []
 
+    wr_buffer_gyo_x = []
+    wr_buffer_gyo_y = []
+    wr_buffer_gyo_z = []
+
     ua_buffer_acc_x = []
     ua_buffer_acc_y = []
     ua_buffer_acc_z = []
+
+    ua_buffer_gyo_x = []
+    ua_buffer_gyo_y = []
+    ua_buffer_gyo_z = []
 
     be_buffer_acc_x = []
     be_buffer_acc_y = []
     be_buffer_acc_z = []
 
+    be_buffer_gyo_x = []
+    be_buffer_gyo_y = []
+    be_buffer_gyo_z = []
 
     i = 0
 
@@ -50,21 +69,41 @@ def load_data_set(filename):
             lp_buffer_acc_y.append(float(sp_line[2]))
             lp_buffer_acc_z.append(float(sp_line[3]))
 
+            lp_buffer_gyo_x.append(float(sp_line[7]))
+            lp_buffer_gyo_y.append(float(sp_line[8]))
+            lp_buffer_gyo_z.append(float(sp_line[9]))
+
             rp_buffer_acc_x.append(float(sp_line[15]))
             rp_buffer_acc_y.append(float(sp_line[16]))
             rp_buffer_acc_z.append(float(sp_line[17]))
+
+            rp_buffer_gyo_x.append(float(sp_line[21]))
+            rp_buffer_gyo_y.append(float(sp_line[22]))
+            rp_buffer_gyo_z.append(float(sp_line[23]))
 
             wr_buffer_acc_x.append(float(sp_line[29]))
             wr_buffer_acc_y.append(float(sp_line[30]))
             wr_buffer_acc_z.append(float(sp_line[31]))
 
+            wr_buffer_gyo_x.append(float(sp_line[35]))
+            wr_buffer_gyo_y.append(float(sp_line[36]))
+            wr_buffer_gyo_z.append(float(sp_line[37]))
+
             ua_buffer_acc_x.append(float(sp_line[43]))
             ua_buffer_acc_y.append(float(sp_line[44]))
             ua_buffer_acc_z.append(float(sp_line[45]))
 
+            ua_buffer_gyo_x.append(float(sp_line[49]))
+            ua_buffer_gyo_y.append(float(sp_line[50]))
+            ua_buffer_gyo_z.append(float(sp_line[51]))
+
             be_buffer_acc_x.append(float(sp_line[57]))
             be_buffer_acc_y.append(float(sp_line[58]))
             be_buffer_acc_z.append(float(sp_line[59]))
+
+            be_buffer_gyo_x.append(float(sp_line[63]))
+            be_buffer_gyo_y.append(float(sp_line[64]))
+            be_buffer_gyo_z.append(float(sp_line[65]))
 
             i += 1
 
@@ -80,21 +119,41 @@ def load_data_set(filename):
                 lp_buffer_acc_y = []
                 lp_buffer_acc_z = []
 
+                lp_buffer_gyo_x = []
+                lp_buffer_gyo_y = []
+                lp_buffer_gyo_z = []
+
                 rp_buffer_acc_x = []
                 rp_buffer_acc_y = []
                 rp_buffer_acc_z = []
+
+                rp_buffer_gyo_x = []
+                rp_buffer_gyo_y = []
+                rp_buffer_gyo_z = []
 
                 wr_buffer_acc_x = []
                 wr_buffer_acc_y = []
                 wr_buffer_acc_z = []
 
+                wr_buffer_gyo_x = []
+                wr_buffer_gyo_y = []
+                wr_buffer_gyo_z = []
+
                 ua_buffer_acc_x = []
                 ua_buffer_acc_y = []
                 ua_buffer_acc_z = []
 
+                ua_buffer_gyo_x = []
+                ua_buffer_gyo_y = []
+                ua_buffer_gyo_z = []
+
                 be_buffer_acc_x = []
                 be_buffer_acc_y = []
                 be_buffer_acc_z = []
+
+                be_buffer_gyo_x = []
+                be_buffer_gyo_y = []
+                be_buffer_gyo_z = []
 
             if i == 128:
 
