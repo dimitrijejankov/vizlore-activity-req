@@ -1,5 +1,6 @@
 from numpy import ndarray, array
 from methods.utilities import get_mean, get_correlation, get_energy, get_standard_deviation
+import matplotlib.pyplot as plt
 
 
 def load_data_acceleration(results_filename, acc_x_filename, acc_y_filename, acc_z_filename):
@@ -25,6 +26,9 @@ def load_data_acceleration(results_filename, acc_x_filename, acc_y_filename, acc
         for value in x_values:
             temp.append(float(value))
         mean = get_mean(temp)
+
+        #plt.plot(temp)
+        #plt.show()
 
         x_data.append(temp)
         x_mean.append(mean)

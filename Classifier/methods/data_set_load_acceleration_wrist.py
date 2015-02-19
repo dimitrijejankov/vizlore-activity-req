@@ -1,4 +1,5 @@
 from methods.utilities import get_mean, get_correlation, get_energy, get_standard_deviation
+import matplotlib.pyplot as plt
 
 activity_table = {'walking\r\n': 1,
                   'sitting\r\n': 2,
@@ -31,9 +32,9 @@ def load_data_set(filename):
         if skip <= 0:
             sp_line = line.split(',')
 
-            wr_buffer_acc_x.append(float(sp_line[29]))
-            wr_buffer_acc_y.append(float(sp_line[30]))
-            wr_buffer_acc_z.append(float(sp_line[31]))
+            wr_buffer_acc_x.append(float(sp_line[1]))
+            wr_buffer_acc_y.append(float(sp_line[2]))
+            wr_buffer_acc_z.append(float(sp_line[3]))
 
             i += 1
 
@@ -51,6 +52,9 @@ def load_data_set(filename):
             if i == 128:
 
                 # acceleration means
+
+                #plt.plot(wr_buffer_acc_x)
+                #plt.show()
 
                 wr_mean_acc_x = get_mean(wr_buffer_acc_x)
                 wr_mean_acc_y = get_mean(wr_buffer_acc_y)
