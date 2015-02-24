@@ -12,6 +12,7 @@ target, data = load_data("my_data_processed/activity_train.csv",
                          "my_data_processed/gyroscope_train_z.csv")
 
 data = ndarray(shape=(len(data), 21), dtype=float, buffer=np.asanyarray(data))
+data = data[:, 0:12]
 target = ndarray(shape=(len(target),), dtype=int, buffer=np.asanyarray(target))
 
 clf = svm.SVC()
@@ -26,6 +27,7 @@ target, data = load_data("my_data_processed/activity_test.csv",
                          "my_data_processed/gyroscope_test_z.csv")
 
 data = ndarray(shape=(len(data), 21), dtype=float, buffer=np.asanyarray(data))
+data = data[:, 0:12]
 target = ndarray(shape=(len(target),), dtype=int, buffer=np.asanyarray(target))
 
 y_predicted = clf.predict(data)

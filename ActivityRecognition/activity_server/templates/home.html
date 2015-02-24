@@ -8,6 +8,9 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script type="text/javascript">
 
+        var classifier = 'svc';
+        var classification_depth = 'shallow';
+
         function test_post() {
 
             var acceleration = [
@@ -316,12 +319,12 @@
 
         function test_get() {
 
-            alert("executing");
+            alert(classifier + classification_depth);
 
             $.ajax({
                         url: 'http://localhost:55555/rest/',
                         type: 'GET',
-                        data: 'uuid=123&recognition=shallow',
+                        data: 'uuid=123&clf_type=' + classifier + '&clf_depth=' + classification_depth,
                         async: false,
                         complete: function (result) {
                             if (result.status == 0) {
@@ -337,6 +340,17 @@
 
     </script>
 
+    <script>
+
+        function set_classifier(value) {
+            classifier = value;
+        }
+
+        function set_depth(value) {
+            classification_depth = value;
+        }
+
+    </script>
 </head>
 <body>
 
@@ -346,6 +360,20 @@
 
 <button type="button" onclick="test_post()">Test REST Post</button>
 <button type="button" onclick="test_get()">Test REST Get</button>
+
+<label>
+    <select onchange="set_classifier(this.value)">
+        <option value="svc">Support Vector Machine</option>
+        <option value="tree">Decision Tree Classifier</option>
+    </select>
+</label>
+
+<label>
+    <select onchange="set_depth(this.value)">
+        <option value="shallow">Standard Feature Set</option>
+        <option value="deep">Extended Feature Set</option>
+    </select>
+</label>
 
 </body>
 </html> 

@@ -24,13 +24,13 @@ data = np.append(data1, data2, 0)
 target = np.append(target1, target2)
 
 data = ndarray(shape=(len(data), 21), dtype=float, buffer=np.asanyarray(data))
+data = data[:, 0:12]
 target = ndarray(shape=(len(target),), dtype=int, buffer=np.asanyarray(target))
-
 
 clf = svm.SVC(probability=True)
 clf.fit(data, target)
-joblib.dump(clf, '../ActivityRecognition/activity_server/classifier/acc_gyo/classifier_svc.pkl')
+joblib.dump(clf, '../ActivityRecognition/activity_server/classifier/acc/classifier_svc.pkl')
 
 clf = tree.DecisionTreeClassifier()
 clf.fit(data, target)
-joblib.dump(clf, '../ActivityRecognition/activity_server/classifier/acc_gyo/classifier_tree.pkl')
+joblib.dump(clf, '../ActivityRecognition/activity_server/classifier/acc/classifier_tree.pkl')

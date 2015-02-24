@@ -35,7 +35,8 @@ class RESTView(View):
                 raise Exception("Bad request")
 
             record = recognize_last_activity(request.GET['uuid'],
-                                             request.GET['recognition'] if 'recognition' in request.GET else 'shallow')
+                                             request.GET['clf_type'] if 'clf_type' in request.GET else 'svc',
+                                             request.GET['clf_depth'] if 'clf_depth' in request.GET else 'shallow')
 
             response_text = "date_time:'%s', " % record.get("time")
 

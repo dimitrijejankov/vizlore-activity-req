@@ -1,16 +1,19 @@
 import numpy as np
 from activity_server.models import DataRecord, AcceleratorRecord, GyroscopeRecord
-from activity_server.utilities.statistics import get_features
+from activity_server.utilities.statistics import get_features, get_features_acceleration
 from sklearn.externals import joblib
 from django.core.exceptions import ObjectDoesNotExist
 from scipy.interpolate import interp1d
 from scipy.signal import butter, lfilter, medfilt
 
 
-clf = joblib.load('activity_server/classifier/classifier.pkl')
+svc_acc_gyo = joblib.load('activity_server/classifier/acc_gyo/classifier_svc.pkl')
+svc_acc = joblib.load('activity_server/classifier/acc/classifier_svc.pkl')
+tree_acc_gyo = joblib.load('activity_server/classifier/acc_gyo/classifier_tree.pkl')
+tree_acc = joblib.load('activity_server/classifier/acc/classifier_tree.pkl')
 
 
-def recognize_last_activity(uuid, type):
+def recognize_last_activity(uuid, classifier_type, classification_depth):
 
     record = DataRecord.objects.filter(user_id=uuid).latest('record_date')
     acceleration_data = AcceleratorRecord.objects.filter(data_record=record.id).order_by("time_stamp")
@@ -19,10 +22,17 @@ def recognize_last_activity(uuid, type):
         gyroscope_data = GyroscopeRecord.objects.filter(data_record=record.id).order_by("time_stamp")
         t, x_acc, y_acc, z_acc, x_gyo, y_gyo, z_gyo = process_data(acceleration_data, gyroscope_data)
         data = get_features(x_acc, y_acc, z_acc, x_gyo, y_gyo, z_gyo)
-        return {"vector": clf.predict_proba(data)[0], "time": record.record_date}
+        if classifier_type == 'svc':
+            return {"vector": svc_acc_gyo.predict_proba(data)[0], "time": record.record_date}
+        elif classifier_type == 'tree':
+            return {"vector": tree_acc_gyo.predict_proba(data)[0], "time": record.record_date}
     except ObjectDoesNotExist:
         x, y, z, t = process_acceleration_data(acceleration_data)
-        pass
+        data = get_features_acceleration(x, y, z)
+        if classifier_type == 'svc':
+            return {"vector": svc_acc.predict_proba(data)[0], "time": record.record_date}
+        elif classifier_type == 'tree':
+            return {"vector": tree_acc.predict_proba(data)[0], "time": record.record_date}
 
     return None
 
