@@ -1,68 +1,161 @@
 import numpy as np
-
 from activity_server.models import DataRecord, AcceleratorRecord, GyroscopeRecord
-from activity_server.utilities.sensor_features import get_acceleration_features, get_gyroscope_features
-from numpy import ndarray
+from activity_server.utilities.statistics import get_features
 from sklearn.externals import joblib
+from django.core.exceptions import ObjectDoesNotExist
+from scipy.interpolate import interp1d
+from scipy.signal import butter, lfilter, medfilt
+
 
 clf = joblib.load('activity_server/classifier/classifier.pkl')
 
 
-def find_record(uuid):
+def recognize_last_activity(uuid, type):
 
     record = DataRecord.objects.filter(user_id=uuid).latest('record_date')
+    acceleration_data = AcceleratorRecord.objects.filter(data_record=record.id).order_by("time_stamp")
 
-    if False:#record.activity_calculated:
-        return record
-    else:
-        acceleration_data = AcceleratorRecord.objects.filter(data_record=record.id).order_by("time_stamp")
-        acc_x, acc_y, acc_z = process_sensor_data(acceleration_data)
-        acc_features = get_acceleration_features(acc_x, acc_y, acc_z)
-
+    try:
         gyroscope_data = GyroscopeRecord.objects.filter(data_record=record.id).order_by("time_stamp")
-        gyo_x, gyo_y, gyo_z = process_sensor_data(gyroscope_data)
-        gyo_features = get_gyroscope_features(gyo_x, gyo_y, gyo_z)
+        t, x_acc, y_acc, z_acc, x_gyo, y_gyo, z_gyo = process_data(acceleration_data, gyroscope_data)
+        data = get_features(x_acc, y_acc, z_acc, x_gyo, y_gyo, z_gyo)
+        return {"vector": clf.predict_proba(data)[0], "time": record.record_date}
+    except ObjectDoesNotExist:
+        x, y, z, t = process_acceleration_data(acceleration_data)
+        pass
 
-        features = []
-        features.extend(acc_features)
-        features.extend(gyo_features)
-
-        data = ndarray(shape=(1, 21), dtype=float, buffer=np.asanyarray(features))
-
-        probability = clf.predict_proba(data)
-
-        record.activity_calculated = True
-
-        record.walking = probability[0][0]
-        record.sitting = probability[0][1]
-        record.standing = probability[0][2]
-        record.jogging = probability[0][3]
-        record.biking = probability[0][4]
-        record.upstairs = probability[0][5]
-        record.downstairs = probability[0][6]
-
-        record.save()
-
-        return record
+    return None
 
 
-def process_sensor_data(sensor_data):
+def butter_bandpass(low_cut, high_cut, fs, order=5):
+    nyq = 0.5 * fs
+    low = low_cut / nyq
+    high = high_cut / nyq
+    b, a = butter(order, [low, high], btype='band')
+    return b, a
+
+
+def butter_bandpass_filter(x, low_cut, high_cut, fs, order=5):
+    b, a = butter_bandpass(low_cut, high_cut, fs, order=order)
+    y = lfilter(b, a, x)
+    return y
+
+
+def filter_acceleration(x, y, z):
+    x = medfilt(np.array(x))
+    y = medfilt(np.array(y))
+    z = medfilt(np.array(z))
+
+    x = butter_bandpass_filter(x, 0, 20, 50, order=3)
+    y = butter_bandpass_filter(y, 0, 20, 50, order=3)
+    z = butter_bandpass_filter(z, 0, 20, 50, order=3)
+
+    return x, y, z
+
+
+def filter_gyroscope(x, y, z):
+    x = medfilt(np.array(x))
+    y = medfilt(np.array(y))
+    z = medfilt(np.array(z))
+
+    x = butter_bandpass_filter(x, 0.3, 20, 50, order=3)
+    y = butter_bandpass_filter(y, 0.3, 20, 50, order=3)
+    z = butter_bandpass_filter(z, 0.3, 20, 50, order=3)
+
+    return x, y, z
+
+
+def resample_acceleration_data(x, y, z, t):
+
+    t_begin = t[0]
+    t_end = t[-1]
+
+    f_x_acc = interp1d(t, x)
+    f_y_acc = interp1d(t, y)
+    f_z_acc = interp1d(t, z)
+
+    size = (t_end - t_begin)//20
+
+    t = np.linspace(t_begin, t_begin + size * 20, size)
+
+    x = f_x_acc(t)
+    y = f_y_acc(t)
+    z = f_z_acc(t)
+
+    return t, x, y, z
+
+
+def process_acceleration_data(sensor_data):
     x = []
     y = []
     z = []
+    t = []
 
-    current_time = sensor_data[0].time_stamp
-    current_index = 0
+    for i in xrange(len(sensor_data)):
+        x.append(sensor_data[i].x)
+        y.append(sensor_data[i].y)
+        z.append(sensor_data[i].z)
+        t.append(sensor_data[i].t)
 
-    for i in xrange(0, 128):
+    x, y, z, t = resample_acceleration_data(x, y, z, t)
+    x, y, z = filter_acceleration(x, y, z)
 
-        while current_time >= sensor_data[current_index].time_stamp and current_index != len(sensor_data) - 1:
-            current_index += 1
+    return x, y, z, t
 
-        x.append(sensor_data[current_index - 1].x)
-        y.append(sensor_data[current_index - 1].y)
-        z.append(sensor_data[current_index - 1].z)
 
-        current_time += 20
+def resample_data(x_acc, y_acc, z_acc, t_acc, x_gyo, y_gyo, z_gyo, t_gyo):
 
-    return x, y, z
+    t_begin = max(t_acc[0], t_gyo[0])
+    t_end = min(t_acc[-1], t_gyo[-1])
+
+    f_x_acc = interp1d(t_acc, x_acc)
+    f_y_acc = interp1d(t_acc, y_acc)
+    f_z_acc = interp1d(t_acc, z_acc)
+
+    f_x_gyo = interp1d(t_gyo, x_gyo)
+    f_y_gyo = interp1d(t_gyo, y_gyo)
+    f_z_gyo = interp1d(t_gyo, z_gyo)
+
+    size = (t_end - t_begin)//20
+
+    t = np.linspace(t_begin, t_begin + size * 20, size)
+
+    x_acc = f_x_acc(t)
+    y_acc = f_y_acc(t)
+    z_acc = f_z_acc(t)
+
+    x_gyo = f_x_gyo(t)
+    y_gyo = f_y_gyo(t)
+    z_gyo = f_z_gyo(t)
+
+    return t, x_acc, y_acc, z_acc, x_gyo, y_gyo, z_gyo
+
+
+def process_data(acceleration_data, gyroscope_data):
+    x_acc = []
+    y_acc = []
+    z_acc = []
+    t_acc = []
+
+    x_gyo = []
+    y_gyo = []
+    z_gyo = []
+    t_gyo = []
+
+    for i in xrange(len(acceleration_data)):
+        x_acc.append(acceleration_data[i].x)
+        y_acc.append(acceleration_data[i].y)
+        z_acc.append(acceleration_data[i].z)
+        t_acc.append(acceleration_data[i].time_stamp)
+
+    for i in xrange(len(gyroscope_data)):
+        x_gyo.append(gyroscope_data[i].x)
+        y_gyo.append(gyroscope_data[i].y)
+        z_gyo.append(gyroscope_data[i].z)
+        t_gyo.append(gyroscope_data[i].time_stamp)
+
+    t, x_acc, y_acc, z_acc, x_gyo, y_gyo, z_gyo = resample_data(x_acc, y_acc, z_acc, t_acc, x_gyo, y_gyo, z_gyo, t_gyo)
+    x_acc, y_acc, z_acc = filter_acceleration(x_acc, y_acc, z_acc)
+    x_gyo, y_gyo, z_gyo = filter_gyroscope(x_gyo, y_gyo, z_gyo)
+
+    return t, x_acc, y_acc, z_acc, x_gyo, y_gyo, z_gyo

@@ -1,26 +1,18 @@
 from django.db import models
 
-activity_table = {1: 'walking',
-                  2: 'sitting',
-                  3: 'standing',
-                  4: 'jogging',
-                  5: 'biking',
-                  6: 'upstairs',
-                  7: 'downstairs'}
+activity_table = {1: "Sitting Hand",
+                  2: "Sitting Pocket",
+                  3: "Walking Hand",
+                  4: "Walking Pocket",
+                  5: "Standing Hand",
+                  6: "Standing Pocket",
+                  7: "Upstairs",
+                  8: "Downstairs"}
 
 
 class DataRecord(models.Model):
     user_id = models.CharField(max_length=40)
     record_date = models.DateTimeField()
-    activity_calculated = models.BooleanField()
-
-    walking = models.FloatField()
-    sitting = models.FloatField()
-    standing = models.FloatField()
-    jogging = models.FloatField()
-    biking = models.FloatField()
-    upstairs = models.FloatField()
-    downstairs = models.FloatField()
 
     def get_activity_name(self):
         return activity_table.get(self.activity.real)
