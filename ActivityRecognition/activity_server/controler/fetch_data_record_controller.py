@@ -1,5 +1,5 @@
 import numpy as np
-from activity_server.models import DataRecord, AcceleratorRecord, GyroscopeRecord, activity_table, activity_table_json
+from activity_server.models import DataRecord, activity_table, activity_table_json
 from activity_server.utilities.statistics import get_features, get_features_acceleration
 from activity_server.utilities.statistics import get_enhanced_features, get_enhanced_features_acceleration
 from sklearn.externals import joblib

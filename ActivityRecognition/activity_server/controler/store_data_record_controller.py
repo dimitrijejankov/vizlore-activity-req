@@ -1,4 +1,4 @@
-from activity_server.models import DataRecord, LocationRecord, AcceleratorRecord, WifiRecord, GyroscopeRecord
+from activity_server.models import DataRecord
 from datetime import datetime
 
 
@@ -25,6 +25,37 @@ def store_data_record(json_object):
 
     else:
         raise Exception("Invalid json format")
+
+
+def reformat_data(json_object):
+
+    acceleration_t = []
+    acceleration_x = []
+    acceleration_y = []
+    acceleration_z = []
+
+    for acceleration_object in json_object.get("acceleration"):
+
+        acceleration_t.append(acceleration_object.get("timestamp"))
+        acceleration_x.append(acceleration_object.get("x"))
+        acceleration_y.append(acceleration_object.get("y"))
+        acceleration_z.append(acceleration_object.get("z"))
+
+    gyroscope_t = []
+    gyroscope_x = []
+    gyroscope_y = []
+    gyroscope_z = []
+
+    for gyroscope_object in json_object.get("gyroscope"):
+
+        gyroscope_t.append(gyroscope_object.get("timestamp"))
+        gyroscope_x.append(gyroscope_object.get("x"))
+        gyroscope_y.append(gyroscope_object.get("y"))
+        gyroscope_z.append(gyroscope_object.get("z"))
+
+    wifi = []
+    location = []
+
 
 
 def store_location_record(locations_object, data_object):

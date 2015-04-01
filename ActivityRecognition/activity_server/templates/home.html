@@ -294,7 +294,7 @@
 
             $.ajax(
                     {
-                        url: 'http://89.216.30.67:55555/ac/',
+                        url: 'http://localhost:55555/ac/',
                         type: 'POST',
                         processData: false,
                         contentType: 'application/json; charset=utf-8',
@@ -331,7 +331,7 @@
             var curr_act = document.getElementById("current_activity");
 
             $.ajax({
-                        url: 'http://89.216.30.67:55555/ac/',
+                        url: 'http://localhost:55555/ac/',
                         type: 'GET',
                         data: 'uuid=46cf6430e66df4b4&alg=' + algorithm + '&fs=' + feature_set  + "&curr_act=" + curr_act.checked,
                         async: false,

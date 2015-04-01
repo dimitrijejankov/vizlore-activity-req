@@ -1,4 +1,5 @@
 from django.db import models
+from djangotoolbox.fields import ListField
 
 activity_table = {1: "Sitting Hand",
                   2: "Sitting Pocket",
@@ -43,36 +44,22 @@ activity_table_json = {
 
 class DataRecord(models.Model):
     user_id = models.CharField(max_length=40)
-    record_date = models.DateTimeField()
-
-    def get_activity_name(self):
-        return activity_table.get(self.activity.real)
-
-
-class WifiRecord(models.Model):
     time_stamp = models.BigIntegerField()
-    data_record = models.ForeignKey(DataRecord)
-    wifi_name = models.CharField(max_length=32)
 
+    acceleration_t = ListField()
+    acceleration_x = ListField()
+    acceleration_y = ListField()
+    acceleration_z = ListField()
 
-class LocationRecord(models.Model):
-    data_record = models.ForeignKey(DataRecord)
-    time_stamp = models.BigIntegerField()
-    lat = models.FloatField()
-    lon = models.FloatField()
+    gyroscope_t = ListField()
+    gyroscope_x = ListField()
+    gyroscope_y = ListField()
+    gyroscope_z = ListField()
 
+    wifi_t = ListField()
+    wifi_ssid = ListField()
 
-class AcceleratorRecord(models.Model):
-    data_record = models.ForeignKey(DataRecord)
-    time_stamp = models.BigIntegerField()
-    x = models.FloatField()
-    y = models.FloatField()
-    z = models.FloatField()
+    location_t = ListField()
+    location_lan = ListField()
+    location_lon = ListField()
 
-
-class GyroscopeRecord(models.Model):
-    data_record = models.ForeignKey(DataRecord)
-    time_stamp = models.BigIntegerField()
-    x = models.FloatField()
-    y = models.FloatField()
-    z = models.FloatField()
