@@ -1,5 +1,6 @@
 from django.db import models
-from djangotoolbox.fields import ListField
+from djangotoolbox.fields import ListField, DictField, EmbeddedModelField
+from django_mongodb_engine.contrib import MongoDBManager
 
 activity_table = {1: "Sitting Hand",
                   2: "Sitting Pocket",
@@ -42,24 +43,30 @@ activity_table_json = {
 }
 
 
+class WifiEntry(models.Model):
+    time_stamp = models.BigIntegerField()
+    ssids = ListField()
+
+
+class LocationEntry(models.Model):
+    time_stamp = models.BigIntegerField()
+    lat = models.FloatField()
+    lon = models.FloatField()
+
+
+class ActivityEntry(models.Model):
+    svm_ech = ListField()
+    svm = ListField()
+    dt_ech = ListField()
+    dt = ListField()
+
+
 class DataRecord(models.Model):
     user_id = models.CharField(max_length=40)
-    time_stamp = models.BigIntegerField()
+    date_time = models.DateTimeField()
+    objects = MongoDBManager()
 
-    acceleration_t = ListField()
-    acceleration_x = ListField()
-    acceleration_y = ListField()
-    acceleration_z = ListField()
-
-    gyroscope_t = ListField()
-    gyroscope_x = ListField()
-    gyroscope_y = ListField()
-    gyroscope_z = ListField()
-
-    wifi_t = ListField()
-    wifi_ssid = ListField()
-
-    location_t = ListField()
-    location_lan = ListField()
-    location_lon = ListField()
+    activity = EmbeddedModelField('ActivityEntry')
+    wifi = ListField(EmbeddedModelField('WifiEntry'))
+    location = ListField(EmbeddedModelField('LocationEntry'))
 
