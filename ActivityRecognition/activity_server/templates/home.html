@@ -6,143 +6,55 @@
     <title>Vizlore ActivityRecognition</title>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
-    <style type="text/css">
-        #drop_zone {
-            border: 1px solid black;
-            margin-left: 0;
-            margin-right: 0;
-            height: 200px;
-            top: 0px;
-        }
-
-        ​
-    </style>
-
-    <script>
-
-        var algorithm = 'svm';
-        var feature_set = 'standard';
-
-        function set_algorithm(value) {
-            algorithm = value;
-        }
-
-        function set_feature_set(value) {
-            feature_set = value;
-        }
-
-    </script>
-
+    <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
 
 <h1>Vizlore ActivityRecognition</h1>
 
-<div id="resultDivContainer"></div>
+<div>
+    <h2>Data upload form</h2>
 
-Current activity: <input id="current_activity" type="checkbox">
-Delta time: <input id="delta_time" type="text" name="delta_time" value="10">
+    <div>
+        <span id="drop_zone_acc" class="drop_zone">Drop acceleration files here</span>
+        <span id="drop_zone_gyo" class="drop_zone">Drop gyroscope files here</span>
+        <input type="file" id="file_acc" name="files[]" class="file_chooser"/>
+        <input type="file" id="file_gyo" name="files[]" class="file_chooser"/>
+    </div>
 
-<label>
-    <select onchange="set_algorithm(this.value)">
-        <option value="svm">Support Vector Machine</option>
-        <option value="dt">Decision Tree Classifier</option>
-    </select>
-</label>
+    <p id="output"></p>
+    <button id="submit_button">Submit</button>
 
-<label>
-    <select onchange="set_feature_set(this.value)">
-        <option value="standard">Standard Feature Set</option>
-        <option value="enhanced">Extended Feature Set</option>
-    </select>
-</label>
+</div>
 
-<br/>
+<div>
+    <h2>Activity recognition</h2>
 
-<p id="output">This is where the output is</p>
-<br/>
+    <div>
+        Current activity: <input id="current_activity" type="checkbox">
+        Delta time: <input id="delta_time" type="text" name="delta_time" value="10">
 
-<div id="drop_zone">Drop files here</div>
-<output id="list"></output>
-<script>
-    function handleFileSelect(evt) {
-        evt.stopPropagation();
-        evt.preventDefault();
+        <label>
+            <select onchange="set_algorithm(this.value)">
+                <option value="svm">Support Vector Machine</option>
+                <option value="dt">Decision Tree Classifier</option>
+            </select>
+        </label>
 
-        var files = evt.dataTransfer.files; // FileList object.
+        <label>
+            <select onchange="set_feature_set(this.value)">
+                <option value="standard">Standard Feature Set</option>
+                <option value="enhanced">Extended Feature Set</option>
+            </select>
+        </label>
 
-        // files is a FileList of File objects. List some properties.
-        var output = [];
-        for (var i = 0, f; f = files[i]; i++) {
-            var reader = new FileReader();
-            reader.onload = function (progressEvent) {
+        <button id="activity_button">Recognise Activity</button>
+    </div>
 
-                var lines = this.result.split('\n');
-                var acc = [];
+    <output id="list"></output>
+</div>
 
-                for (var line = 0; line < lines.length - 1; line++) {
-                    var values = lines[line].split(',');
-                    for (var i = 0; i < values.length; i++) {
-                        acc.push({timestamp: parseFloat(values[0]),
-                                  x: parseFloat(values[1]),
-                                  y: parseFloat(values[2]),
-                                  z: parseFloat(values[3])});
-                    }
-                }
+<script type="text/javascript" src="static/logic.js"></script>
 
-                do_post(acc, []);
-            };
-            reader.readAsText(f);
-        }
-        document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
-    }
-
-    function do_post(acceleration, gyroscope) {
-
-            var location = [
-                { timestamp:423611596321, coords: { latitude:44.802416, longitude:20.465601 }},
-                { timestamp:423611595214, coords: { latitude:44.802416, longitude:20.465601 }}
-            ];
-            var wifi = [
-                {ssids:["Ninja", "Turtle"], timestamp:423611596321},
-                {ssids:["Ninja2", "Turtle"], timestamp:423611595214}
-            ];
-
-
-            var uuid = '46cf6430e66df4b4';//Math.floor(Math.random() * 100000).toString();
-            var data = {uuid: uuid, acceleration: acceleration, gyroscope: gyroscope, location: location, wifi: wifi};
-            $.ajax(
-                    {
-                        url: 'http://localhost:55555/ac/',
-                        type: 'POST',
-                        processData: false,
-                        contentType: 'application/json; charset=utf-8',
-                        data: JSON.stringify(data),
-                        dataType: 'json',
-                        async: false,
-                        complete: function (result) {
-                            if (result.status == 0) {
-                                alert('0 status - browser could be on offline mode');
-                            } else if (result.status == 404) {
-                                alert('404 - not found');
-                            } else {
-                                alert(result.responseText);
-                            }
-                        }
-                    });
-    }
-
-    function handleDragOver(evt) {
-        evt.stopPropagation();
-        evt.preventDefault();
-        evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
-    }
-
-    // Setup the dnd listeners.
-    var dropZone = document.getElementById('drop_zone');
-    dropZone.addEventListener('dragover', handleDragOver, false);
-    dropZone.addEventListener('drop', handleFileSelect, false);
-</script>
 </body>
 </html> 
