@@ -1,12 +1,11 @@
 import json
 import numpy as np
 from django.views.generic import View
-from django.shortcuts import render_to_response
-from django.template.context import RequestContext
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from activity_server.controler.store_data_record_controller import store_data_record
-from activity_server.controler.fetch_data_record_controller import recognize_last_activity, recognize_last_activities
+from activity_server.controler.hidden_store_data_record_controller import store_data_record
+from activity_server.controler.fetch_data_record_controller import recognize_last_activity
+from activity_server.controler.hidden_fetch_data_record_controller import recognize_last_activities
 from activity_server.models import activity_table, activity_table_json, reduced_activity_table_json, reduced_activity_table
 
 
@@ -17,12 +16,7 @@ def reduce_activity_vector(vector):
     return new_vector
 
 
-class HomeView(View):
-    def get(self, request):
-        return render_to_response("home.html", None, context_instance=RequestContext(request))
-
-
-class RESTView(View):
+class HiddenRestView(View):
     def post(self, request):
         try:
             store_data_record(json.loads(request.body))
@@ -49,11 +43,12 @@ class RESTView(View):
             if ac != '1':
                 raise Exception("Not yet implemented")
 
-            if 'tp' in request.GET:
+            if 'start_ts' in request.GET and 'end_ts':
                 record = recognize_last_activities(request.GET['uuid'],
                                                    algorithm,
                                                    feature_set,
-                                                   int(request.GET['tp']))
+                                                   int(request.GET['start_ts']),
+                                                   int(request.GET['end_ts']))
             else:
                 record = recognize_last_activity(request.GET['uuid'],
                                                  algorithm,
@@ -93,4 +88,4 @@ class RESTView(View):
 
     @csrf_exempt
     def dispatch(self, *args, **kwargs):
-        return super(RESTView, self).dispatch(*args, **kwargs)
+        return super(HiddenRestView, self).dispatch(*args, **kwargs)
