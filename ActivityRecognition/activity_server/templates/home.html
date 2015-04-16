@@ -5,12 +5,15 @@
 <head>
     <title>Vizlore ActivityRecognition</title>
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 </head>
 <body>
 
 <h1>Vizlore ActivityRecognition</h1>
+<br/>
 
 <div>
     <h2>Data upload form</h2>
@@ -31,8 +34,16 @@
     <h2>Activity recognition</h2>
 
     <div>
-        Current activity: <input id="current_activity" type="checkbox">
-        Delta time: <input id="delta_time" type="text" name="delta_time" value="10">
+
+        <label for="current_activity">Current activity:</label>
+        <input id="current_activity" type="checkbox">
+
+        <label for="start_ts">Start time stamp:</label>
+        <input id="start_ts" type="text" name="start_ts" value="0" disabled>
+
+
+        <label for="end_ts">End time stamp: </label>
+        <input id="end_ts" type="text" name="end_ts" value="0" disabled>
 
         <label>
             <select onchange="set_algorithm(this.value)">
@@ -48,6 +59,7 @@
             </select>
         </label>
 
+        <div id="slider-range"></div>
         <button id="activity_button">Recognise Activity</button>
     </div>
 
@@ -55,6 +67,10 @@
 </div>
 
 <script type="text/javascript" src="static/logic.js"></script>
+
+<script type="text/javascript">
+
+</script>
 
 </body>
 </html> 

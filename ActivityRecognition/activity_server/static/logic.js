@@ -4,12 +4,14 @@
 
 var algorithm = 'svm';
 var feature_set = 'standard';
-var uuid = '1';
+var uuid = '2';
 var acceleration = [];
 var gyroscope = [];
 var min_timestamp;
 var max_timestamp;
 var query_number;
+var start_ts;
+var end_ts;
 
 function set_algorithm(value) {
     algorithm = value;
@@ -25,7 +27,7 @@ function handleAccelerationFileSelect(evt) {
 
     var files;
 
-    if(evt.dataTransfer != undefined)
+    if (evt.dataTransfer != undefined)
         files = evt.dataTransfer.files;
     else
         files = evt.target.files;
@@ -60,7 +62,7 @@ function handleGyroscopeFileSelect(evt) {
 
     var files;
 
-    if(evt.dataTransfer != undefined)
+    if (evt.dataTransfer != undefined)
         files = evt.dataTransfer.files;
     else
         files = evt.target.files;
@@ -92,15 +94,12 @@ function handleGyroscopeFileSelect(evt) {
 function get_next_acceleration_frame(index) {
     var frame = [];
 
-    for (var i = index; i < acceleration.length; i++)
-    {
+    for (var i = index; i < acceleration.length; i++) {
 
-        if(acceleration[i].timestamp - acceleration[index].timestamp < 2560)
-        {
+        if (acceleration[i].timestamp - acceleration[index].timestamp < 2560) {
             frame.push(acceleration[i])
         }
-        else
-        {
+        else {
             frame.push(acceleration[i]);
             break;
         }
@@ -109,19 +108,15 @@ function get_next_acceleration_frame(index) {
     return frame;
 }
 
-function get_next_gyroscope_frame(index)
-{
+function get_next_gyroscope_frame(index) {
     var frame = [];
 
-    for (var i = index; i < gyroscope.length; i++)
-    {
+    for (var i = index; i < gyroscope.length; i++) {
 
-        if(gyroscope[i].timestamp - gyroscope[index].timestamp < 2560)
-        {
+        if (gyroscope[i].timestamp - gyroscope[index].timestamp < 2560) {
             frame.push(gyroscope[i])
         }
-        else
-        {
+        else {
             frame.push(gyroscope[i]);
             break;
         }
@@ -130,16 +125,14 @@ function get_next_gyroscope_frame(index)
     return frame;
 }
 
-function process_data()
-{
+function process_data() {
     var acceleration_frames = [];
     var i = 0;
     var frame;
 
     query_number = 0;
 
-    while(i < acceleration.length)
-    {
+    while (i < acceleration.length) {
         frame = get_next_acceleration_frame(i);
         i += frame.length;
         acceleration_frames.push(frame);
@@ -148,72 +141,84 @@ function process_data()
     var gyroscope_frames = [];
     i = 0;
 
-    while(i < gyroscope.length)
-    {
+    while (i < gyroscope.length) {
         frame = get_next_gyroscope_frame(i);
         i += frame.length;
         gyroscope_frames.push(frame);
     }
 
-    if(gyroscope_frames.length > 0)
-    {
+    if (gyroscope_frames.length > 0) {
         var max_size = Math.min(acceleration_frames.length, gyroscope_frames.length);
 
-        for(i = 0; i < max_size; i++)
-        {
+        for (i = 0; i < max_size; i++) {
             do_post(acceleration_frames[i], gyroscope_frames[i]);
             document.getElementById('output').innerHTML = ((query_number * 100) / max_size).toString() + "% complete";
         }
 
         min_timestamp = Math.max(acceleration[0].timestamp, gyroscope[0].timestamp);
-        max_timestamp = Math.min(acceleration[acceleration.length-1].timestamp,
-                                 gyroscope[acceleration.length-1].timestamp);
+        max_timestamp = Math.min(acceleration[acceleration.length - 1].timestamp,
+            gyroscope[acceleration.length - 1].timestamp);
     }
-    else
-    {
-        for(i = 0; i < acceleration_frames.length; i++)
-        {
+    else {
+        for (i = 0; i < acceleration_frames.length; i++) {
             do_post(acceleration_frames[i], []);
             document.getElementById('output').innerHTML =
                 ((query_number * 100) / acceleration_frames.length).toString() + "% complete";
         }
 
         min_timestamp = acceleration[0].timestamp;
-        max_timestamp = acceleration[acceleration.length-1].timestamp;
+        max_timestamp = acceleration[acceleration.length - 1].timestamp;
     }
 
+    $("#slider-range").slider({
+        range: true,
+        min: min_timestamp,
+        max: max_timestamp,
+        values: [min_timestamp, max_timestamp],
+        slide: function (event, ui) {
+            start_ts = Math.round(ui.values[0]);
+            end_ts = Math.round(ui.values[1]);
+            $("#start_ts").val(Math.round(ui.values[0]));
+            $("#end_ts").val(Math.round(ui.values[1]));
+        }
+    });
+
+    $("#start_ts").val(Math.round(min_timestamp));
+    $("#end_ts").val(Math.round(max_timestamp));
+
     document.getElementById('output').innerHTML = "Uploaded the data to the server for user: " + uuid +
-                                                  " Starting timestamp : " + min_timestamp.toString() + "ms" +
-                                                  " Ending timestamp : " + max_timestamp.toString() + "ms";
+    " Starting timestamp : " + min_timestamp.toString() + "ms" +
+    " Ending timestamp : " + max_timestamp.toString() + "ms";
 }
 
-function recognise_activity()
-{
-            var tp = document.getElementById('delta_time').value;
-            var curr_act = document.getElementById("current_activity");
+function recognise_activity() {
+    var curr_act = document.getElementById("current_activity");
 
-            if(tp == "")
-                tp = Math.ceil((max_timestamp - min_timestamp) / 1000);
+    if (start_ts == "" || end_ts == "") {
+        start_ts = min_timestamp / 1000;
+        end_ts = max_timestamp / 1000;
+    }
 
-            $.ajax({
-                        url: 'http://localhost:55555/ac/',
-                        type: 'GET',
-                        data: 'uuid=' + uuid +
-                              '&alg=' + algorithm +
-                              '&fs=' + feature_set  +
-                              '&curr_act=' + curr_act.checked +
-                              '&tp=' + tp,
-                        async: false,
-                        complete: function (result) {
-                            if (result.status == 0) {
-                                alert('0 status - browser could be on offline mode');
-                            } else if (result.status == 404) {
-                                alert('404 - not found');
-                            } else {
-                                document.getElementById('list').innerHTML += '<ul>' + result.responseText + '</ul>';
-                            }
-                        }
-                    });
+    $.ajax({
+        url: 'http://localhost:55555/hac/',
+        type: 'GET',
+        data: 'uuid=' + uuid +
+        '&alg=' + algorithm +
+        '&fs=' + feature_set +
+        '&curr_act=' + curr_act.checked +
+        '&start_ts=' + start_ts +
+        '&end_ts=' + end_ts,
+        async: false,
+        complete: function (result) {
+            if (result.status == 0) {
+                alert('0 status - browser could be on offline mode');
+            } else if (result.status == 404) {
+                alert('404 - not found');
+            } else {
+                document.getElementById('list').innerHTML += '<ul>' + result.responseText + '</ul>';
+            }
+        }
+    });
 }
 
 function do_post(acceleration, gyroscope) {
@@ -231,7 +236,7 @@ function do_post(acceleration, gyroscope) {
     var data = {uuid: uuid, acceleration: acceleration, gyroscope: gyroscope, location: location, wifi: wifi};
     $.ajax(
         {
-            url: 'http://localhost:55555/ac/',
+            url: 'http://localhost:55555/hac/',
             type: 'POST',
             processData: false,
             contentType: 'application/json; charset=utf-8',
@@ -257,13 +262,11 @@ function handleDragOver(evt) {
 }
 
 
-function displayAccelerationFileSelect()
-{
+function displayAccelerationFileSelect() {
     document.getElementById('file_acc').click();
 }
 
-function displayGyroscopeFileSelect()
-{
+function displayGyroscopeFileSelect() {
     document.getElementById('file_gyo').click();
 }
 

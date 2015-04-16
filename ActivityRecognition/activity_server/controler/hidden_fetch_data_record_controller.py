@@ -5,8 +5,8 @@ from datetime import datetime, timedelta
 
 def recognize_last_activities(uuid, algorithm, feature_set, start_ts, end_ts):
 
-    start_datetime = datetime.datetime.fromtimestamp(start_ts)
-    end_datetime = datetime.datetime.fromtimestamp(end_ts)
+    start_datetime = datetime.fromtimestamp(start_ts / 1e3)
+    end_datetime = datetime.fromtimestamp(end_ts / 1e3)
 
     records = DataRecord.objects.filter(user_id=uuid)\
         .filter(date_time__gt=start_datetime)\

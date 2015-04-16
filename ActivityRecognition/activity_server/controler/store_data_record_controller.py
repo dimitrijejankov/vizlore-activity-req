@@ -110,7 +110,7 @@ def process_acceleration_data(acceleration_data):
     t, x, y, z = resample_acceleration_data(x, y, z, t)
     x, y, z = filter_acceleration(x, y, z)
 
-    return x, y, z, t
+    return t, x, y, z
 
 
 def resample_acceleration_data(x, y, z, t):

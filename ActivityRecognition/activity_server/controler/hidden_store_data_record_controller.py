@@ -56,7 +56,7 @@ def store_data_record(json_object):
         wifi_entry = process_wifi(json_object.get('wifi'))
 
         data_record = DataRecord(user_id=json_object.get('uuid'),
-                                 date_time=datetime.datetime.fromtimestamp(t[0] / 1e3),
+                                 date_time=datetime.fromtimestamp(t[0] / 1e3),
                                  activity=activity_entry,
                                  wifi=wifi_entry,
                                  location=locations_entry)
@@ -110,7 +110,7 @@ def process_acceleration_data(acceleration_data):
     t, x, y, z = resample_acceleration_data(x, y, z, t)
     x, y, z = filter_acceleration(x, y, z)
 
-    return x, y, z, t
+    return t, x, y, z
 
 
 def resample_acceleration_data(x, y, z, t):
