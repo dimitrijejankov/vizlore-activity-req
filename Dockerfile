@@ -15,6 +15,7 @@ RUN apt-get install -y python-scipy
 RUN apt-get install -y python-sklearn 
 RUN apt-get install -y curl
 RUN apt-get install -y git
+RUN apt-get install -y netcat
 
 RUN  pip install git+https://github.com/django-nonrel/django@nonrel-1.6
 RUN  pip install git+https://github.com/django-nonrel/djangotoolbox
@@ -27,3 +28,4 @@ RUN  python generate_enhanced_classifier.py
 RUN  python generate_enhanced_classifier_acceleration.py
 WORKDIR /code/ActivityRecognition/
 EXPOSE 8089
+ENTRYPOINT /code/ActivityRecognition/run_server.sh
