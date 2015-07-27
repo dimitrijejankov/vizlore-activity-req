@@ -1,4 +1,4 @@
-FROM mjdsys/ubuntu-saucy-i386
+FROM ubuntu
 ENV PYTHONUNBUFFERED 1
 RUN mkdir /code
 WORKDIR /code
@@ -28,4 +28,4 @@ RUN  python generate_enhanced_classifier.py
 RUN  python generate_enhanced_classifier_acceleration.py
 WORKDIR /code/ActivityRecognition/
 EXPOSE 8089
-ENTRYPOINT /code/ActivityRecognition/run_server.sh
+CMD /code/ActivityRecognition/run_server.sh

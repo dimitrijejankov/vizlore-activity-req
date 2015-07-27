@@ -200,7 +200,7 @@ function recognise_activity() {
     }
 
     $.ajax({
-        url: 'http://localhost:8089/hac/',
+        url: 'hac/',
         type: 'GET',
         data: 'uuid=' + uuid +
         '&alg=' + algorithm +
@@ -236,7 +236,7 @@ function do_post(acceleration, gyroscope) {
     var data = {uuid: uuid, acceleration: acceleration, gyroscope: gyroscope, location: location, wifi: wifi};
     $.ajax(
         {
-            url: 'http://localhost:8089/hac/',
+            url: 'hac/',
             type: 'POST',
             processData: false,
             contentType: 'application/json; charset=utf-8',
