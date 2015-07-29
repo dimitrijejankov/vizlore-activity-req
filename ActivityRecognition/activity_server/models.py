@@ -70,3 +70,10 @@ class DataRecord(models.Model):
     wifi = ListField(EmbeddedModelField('WifiEntry'))
     location = ListField(EmbeddedModelField('LocationEntry'))
 
+
+def reduce_activity_vector(vector):
+    activities = {"sitting": 0.0, "walking": 0.0, "standing": 0.0, "upstairs": 0.0, "downstairs": 0.0}
+
+    for i in xrange(len(vector)):
+        activities[activity_table_json[i + 1]] += vector[i]
+    return activities

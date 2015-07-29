@@ -2,46 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b026144d-efec-43db-b488-ad7ac1adda2e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/activity_server/utilities/classifiers.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc/classifier_svc.pkl" afterPath="$PROJECT_DIR$/activity_server/classifier/acc/classifier_svc.pkl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc_ech/classifier_svc.pkl" afterPath="$PROJECT_DIR$/activity_server/classifier/acc_ech/classifier_svc.pkl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc_gyo/classifier_svc.pkl" afterPath="$PROJECT_DIR$/activity_server/classifier/acc_gyo/classifier_svc.pkl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc_gyo_ech/classifier_svc.pkl" afterPath="$PROJECT_DIR$/activity_server/classifier/acc_gyo_ech/classifier_svc.pkl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc/classifier_svc.pkl_02.npy" afterPath="$PROJECT_DIR$/activity_server/classifier/acc/classifier_svc.pkl_02.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc_ech/classifier_svc.pkl_02.npy" afterPath="$PROJECT_DIR$/activity_server/classifier/acc_ech/classifier_svc.pkl_02.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc_gyo/classifier_svc.pkl_02.npy" afterPath="$PROJECT_DIR$/activity_server/classifier/acc_gyo/classifier_svc.pkl_02.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc_gyo_ech/classifier_svc.pkl_02.npy" afterPath="$PROJECT_DIR$/activity_server/classifier/acc_gyo_ech/classifier_svc.pkl_02.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc/classifier_svc.pkl_03.npy" afterPath="$PROJECT_DIR$/activity_server/classifier/acc/classifier_svc.pkl_03.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc_ech/classifier_svc.pkl_03.npy" afterPath="$PROJECT_DIR$/activity_server/classifier/acc_ech/classifier_svc.pkl_03.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc_gyo/classifier_svc.pkl_03.npy" afterPath="$PROJECT_DIR$/activity_server/classifier/acc_gyo/classifier_svc.pkl_03.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc_gyo_ech/classifier_svc.pkl_03.npy" afterPath="$PROJECT_DIR$/activity_server/classifier/acc_gyo_ech/classifier_svc.pkl_03.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc/classifier_svc.pkl_04.npy" afterPath="$PROJECT_DIR$/activity_server/classifier/acc/classifier_svc.pkl_04.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc_ech/classifier_svc.pkl_04.npy" afterPath="$PROJECT_DIR$/activity_server/classifier/acc_ech/classifier_svc.pkl_04.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc_gyo/classifier_svc.pkl_04.npy" afterPath="$PROJECT_DIR$/activity_server/classifier/acc_gyo/classifier_svc.pkl_04.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc_gyo_ech/classifier_svc.pkl_04.npy" afterPath="$PROJECT_DIR$/activity_server/classifier/acc_gyo_ech/classifier_svc.pkl_04.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc/classifier_tree.pkl" afterPath="$PROJECT_DIR$/activity_server/classifier/acc/classifier_tree.pkl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc_ech/classifier_tree.pkl" afterPath="$PROJECT_DIR$/activity_server/classifier/acc_ech/classifier_tree.pkl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc_gyo/classifier_tree.pkl" afterPath="$PROJECT_DIR$/activity_server/classifier/acc_gyo/classifier_tree.pkl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc_gyo_ech/classifier_tree.pkl" afterPath="$PROJECT_DIR$/activity_server/classifier/acc_gyo_ech/classifier_tree.pkl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc/classifier_tree.pkl_02.npy" afterPath="$PROJECT_DIR$/activity_server/classifier/acc/classifier_tree.pkl_02.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc_ech/classifier_tree.pkl_02.npy" afterPath="$PROJECT_DIR$/activity_server/classifier/acc_ech/classifier_tree.pkl_02.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc_gyo/classifier_tree.pkl_02.npy" afterPath="$PROJECT_DIR$/activity_server/classifier/acc_gyo/classifier_tree.pkl_02.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc_gyo_ech/classifier_tree.pkl_02.npy" afterPath="$PROJECT_DIR$/activity_server/classifier/acc_gyo_ech/classifier_tree.pkl_02.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc/classifier_tree.pkl_03.npy" afterPath="$PROJECT_DIR$/activity_server/classifier/acc/classifier_tree.pkl_03.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc_ech/classifier_tree.pkl_03.npy" afterPath="$PROJECT_DIR$/activity_server/classifier/acc_ech/classifier_tree.pkl_03.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc_gyo/classifier_tree.pkl_03.npy" afterPath="$PROJECT_DIR$/activity_server/classifier/acc_gyo/classifier_tree.pkl_03.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/classifier/acc_gyo_ech/classifier_tree.pkl_03.npy" afterPath="$PROJECT_DIR$/activity_server/classifier/acc_gyo_ech/classifier_tree.pkl_03.npy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/ActivityRecognition.iml" afterPath="$PROJECT_DIR$/.idea/ActivityRecognition.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/controler/hidden_store_data_record_controller.py" afterPath="$PROJECT_DIR$/activity_server/controler/hidden_store_data_record_controller.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/hidden_views.py" afterPath="$PROJECT_DIR$/activity_server/hidden_views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/templates/home.html" afterPath="$PROJECT_DIR$/activity_server/templates/home.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/controler/store_data_record_controller.py" afterPath="$PROJECT_DIR$/activity_server/controler/store_data_record_controller.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/urls.py" afterPath="$PROJECT_DIR$/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/views.py" afterPath="$PROJECT_DIR$/activity_server/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_server/models.py" afterPath="$PROJECT_DIR$/activity_server/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsgi.py" afterPath="$PROJECT_DIR$/wsgi.py" />
     </list>
     <ignored path="ActivityRecognition.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -66,23 +29,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/urls.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
-              <folding>
-                <element signature="e#0#51#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/activity_server/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.44494382">
-              <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -94,7 +45,7 @@
         <entry file="file://$PROJECT_DIR$/activity_server/hidden_views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+              <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -102,11 +53,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="hidden_store_data_record_controller.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/activity_server/controler/hidden_store_data_record_controller.py">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/activity_server/models.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="57" column="42" selection-start-line="57" selection-start-column="42" selection-end-line="57" selection-end-column="42" />
+              <caret line="30" column="1" selection-start-line="30" selection-start-column="1" selection-end-line="30" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="hidden_store_data_record_controller.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/activity_server/controler/hidden_store_data_record_controller.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.28846154">
+              <caret line="10" column="41" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="41" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -153,7 +114,6 @@
         <option value="$PROJECT_DIR$/activity_server/utilities/sensor_features.py" />
         <option value="$PROJECT_DIR$/activity_server/utilities/statistics.py" />
         <option value="$PROJECT_DIR$/ActivityRecognition/settings.py" />
-        <option value="$PROJECT_DIR$/activity_server/models.py" />
         <option value="$PROJECT_DIR$/activity_server/controler/fetch_data_record_controller.py" />
         <option value="$PROJECT_DIR$/activity_server/templates/style.css" />
         <option value="$PROJECT_DIR$/activity_server/controler/hidden_fetch_data_record_controller.py" />
@@ -165,10 +125,11 @@
         <option value="$PROJECT_DIR$/activity_server/controler/hidden_store_data_record_controller.py" />
         <option value="$PROJECT_DIR$/activity_server/controler/store_data_record_controller.py" />
         <option value="$PROJECT_DIR$/activity_server/views.py" />
-        <option value="$PROJECT_DIR$/activity_server/hidden_views.py" />
         <option value="$PROJECT_DIR$/activity_server/utilities/classifiers.py" />
         <option value="$PROJECT_DIR$/urls.py" />
         <option value="$PROJECT_DIR$/activity_server/templates/home.html" />
+        <option value="$PROJECT_DIR$/activity_server/models.py" />
+        <option value="$PROJECT_DIR$/activity_server/hidden_views.py" />
       </list>
     </option>
   </component>
@@ -180,10 +141,9 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1" />
     <option name="y" value="25" />
-    <option name="width" value="1442" />
-    <option name="height" value="876" />
+    <option name="width" value="1440" />
+    <option name="height" value="875" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -211,6 +171,17 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -299,17 +270,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -666,7 +626,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="25" width="1442" height="876" extended-state="6" />
+    <frame x="0" y="25" width="1440" height="875" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24722221" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -680,7 +640,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32950193" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3971903" sideWeight="0.85347223" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16858238" sideWeight="0.85347223" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
@@ -744,7 +704,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="353" />
+      <option name="time" value="355" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Python.DjangoServer">
@@ -755,6 +715,16 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/activity_server/controler/store_data_record_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="9" column="43" selection-start-line="9" selection-start-column="43" selection-end-line="9" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/activity_server/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -972,13 +942,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/activity_server/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="36" column="6" selection-start-line="36" selection-start-column="6" selection-end-line="36" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ActivityRecognition/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -991,9 +954,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#51#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1008,7 +968,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1064,7 +1023,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.17175573">
           <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1072,26 +1030,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="9" column="43" selection-start-line="9" selection-start-column="43" selection-end-line="9" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/activity_server/hidden_views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/activity_server/controler/hidden_store_data_record_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="57" column="42" selection-start-line="57" selection-start-column="42" selection-end-line="57" selection-end-column="42" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -1106,30 +1044,57 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/activity_server/templates/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.64593303">
+          <caret line="15" column="99" selection-start-line="15" selection-start-column="99" selection-end-line="15" selection-end-column="99" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+        <state vertical-scroll-proportion="0.11904762">
+          <caret line="5" column="1" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="1" />
           <folding>
             <element signature="e#0#51#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/activity_server/templates/home.html">
+    <entry file="file://$PROJECT_DIR$/activity_server/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.64593303">
-          <caret line="15" column="99" selection-start-line="15" selection-start-column="99" selection-end-line="15" selection-end-column="99" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="30" column="1" selection-start-line="30" selection-start-column="1" selection-end-line="30" selection-end-column="1" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/activity_server/hidden_views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/activity_server/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44494382">
-          <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/activity_server/controler/hidden_store_data_record_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.28846154">
+          <caret line="10" column="41" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
