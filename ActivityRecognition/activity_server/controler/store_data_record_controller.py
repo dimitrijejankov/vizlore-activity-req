@@ -5,20 +5,9 @@ from scipy.signal import butter, lfilter, medfilt
 from scipy.interpolate import interp1d
 from activity_server.utilities.statistics import get_features, get_features_acceleration
 from activity_server.utilities.statistics import get_enhanced_features, get_enhanced_features_acceleration
-from sklearn.externals import joblib
-
-svc_acc_gyo = joblib.load('./activity_server/classifier/acc_gyo/classifier_svc.pkl')
-svc_acc = joblib.load('./activity_server/classifier/acc/classifier_svc.pkl')
-tree_acc_gyo = joblib.load('./activity_server/classifier/acc_gyo/classifier_tree.pkl')
-tree_acc = joblib.load('./activity_server/classifier/acc/classifier_tree.pkl')
-
-svc_acc_gyo_ech = joblib.load('./activity_server/classifier/acc_gyo_ech/classifier_svc.pkl')
-svc_acc_ech = joblib.load('./activity_server/classifier/acc_ech/classifier_svc.pkl')
-tree_acc_gyo_ech = joblib.load('./activity_server/classifier/acc_gyo_ech/classifier_tree.pkl')
-tree_acc_ech = joblib.load('./activity_server/classifier/acc_ech/classifier_tree.pkl')
 
 
-def store_data_record(json_object):
+def store_data_record(json_object, classifiers):
     if 'uuid' in json_object.keys() and \
        'acceleration' in json_object.keys() and \
        'gyroscope' in json_object.keys() and \
@@ -30,22 +19,22 @@ def store_data_record(json_object):
                                                                        json_object.get('gyroscope'))
 
             data = get_features(x_acc, y_acc, z_acc, x_gyo, y_gyo, z_gyo)
-            svm = svc_acc_gyo.predict_proba(data)[0]
-            dt = tree_acc_gyo.predict_proba(data)[0]
+            svm = classifiers.get_classifier('svc', 'acc_gyo', 'std').predict_proba(data)[0]
+            dt = classifiers.get_classifier('dt', 'acc_gyo', 'std').predict_proba(data)[0]
 
             data = get_enhanced_features(x_acc, y_acc, z_acc, x_gyo, y_gyo, z_gyo)
-            svm_ech = svc_acc_gyo_ech.predict_proba(data)[0]
-            dt_ech = tree_acc_gyo_ech.predict_proba(data)[0]
+            svm_ech = classifiers.get_classifier('svc', 'acc_gyo', 'ech').predict_proba(data)[0]
+            dt_ech = classifiers.get_classifier('dt', 'acc_gyo', 'ech').predict_proba(data)[0]
         else:
             t, x_acc, y_acc, z_acc = process_acceleration_data(json_object.get('acceleration'))
 
             data = get_features_acceleration(x_acc, y_acc, z_acc)
-            svm = svc_acc.predict_proba(data)[0]
-            dt = tree_acc.predict_proba(data)[0]
+            svm = classifiers.get_classifier('svc', 'acc', 'std').predict_proba(data)[0]
+            dt = classifiers.get_classifier('dt', 'acc', 'std').predict_proba(data)[0]
 
             data = get_enhanced_features_acceleration(x_acc, y_acc, z_acc)
-            svm_ech = svc_acc_ech.predict_proba(data)[0]
-            dt_ech = tree_acc_ech.predict_proba(data)[0]
+            svm_ech = classifiers.get_classifier('svc', 'acc', 'ech').predict_proba(data)[0]
+            dt_ech = classifiers.get_classifier('dt', 'acc', 'ech').predict_proba(data)[0]
 
         activity_entry = ActivityEntry(svm=svm.tolist(),
                                        svm_ech=svm_ech.tolist(),

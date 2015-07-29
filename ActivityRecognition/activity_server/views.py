@@ -7,7 +7,8 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from activity_server.controler.store_data_record_controller import store_data_record
 from activity_server.controler.fetch_data_record_controller import recognize_last_activity, recognize_last_activities
-from activity_server.models import activity_table, activity_table_json, reduced_activity_table_json, reduced_activity_table
+from activity_server.models import activity_table_json, reduced_activity_table_json, reduced_activity_table
+from activity_server.utilities.classifiers import ClassifierLoader
 
 
 def reduce_activity_vector(vector):
@@ -23,9 +24,17 @@ class HomeView(View):
 
 
 class RESTView(View):
+
+    classifiers = None
+
+    def __init__(self, **kwargs):
+        super(RESTView, self).__init__(**kwargs)
+        if RESTView.classifiers is None:
+            RESTView.classifiers = ClassifierLoader()
+
     def post(self, request):
         try:
-            store_data_record(json.loads(request.body))
+            store_data_record(json.loads(request.body), RESTView.classifiers)
         except ValueError, e:
             response = HttpResponse("{error:%s}" % e.message)
             request.status_code = 404

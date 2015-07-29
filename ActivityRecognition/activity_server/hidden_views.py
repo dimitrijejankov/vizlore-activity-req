@@ -7,6 +7,7 @@ from activity_server.controler.hidden_store_data_record_controller import store_
 from activity_server.controler.fetch_data_record_controller import recognize_last_activity
 from activity_server.controler.hidden_fetch_data_record_controller import recognize_last_activities
 from activity_server.models import activity_table, activity_table_json, reduced_activity_table_json, reduced_activity_table
+from activity_server.utilities.classifiers import ClassifierLoader
 
 
 def reduce_activity_vector(vector):
@@ -17,9 +18,17 @@ def reduce_activity_vector(vector):
 
 
 class HiddenRestView(View):
+
+    classifiers = None
+
+    def __init__(self, **kwargs):
+        super(HiddenRestView, self).__init__(**kwargs)
+        if HiddenRestView.classifiers is None:
+            HiddenRestView.classifiers = ClassifierLoader()
+
     def post(self, request):
         try:
-            store_data_record(json.loads(request.body))
+            store_data_record(json.loads(request.body), HiddenRestView.classifiers)
         except ValueError, e:
             response = HttpResponse("{error:%s}" % e.message)
             request.status_code = 404
