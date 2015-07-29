@@ -1,5 +1,5 @@
-from math import sqrt
 from numpy import ndarray, array
+from numpy import mean, std, power, sum, multiply, subtract, min, max, absolute
 
 
 def get_mean(x_array):
@@ -8,20 +8,16 @@ def get_mean(x_array):
     :param x_array:
     :return:
     """
-    return sum(x_array) / len(x_array)
+    return mean(x_array)
 
 
-def get_standard_deviation(x_array, mean):
+def get_standard_deviation(x_array):
     """
     Calculates the standard deviation of the array
     :param x_array:
-    :param mean:
     :return:
     """
-    s = 0
-    for i in xrange(len(x_array)):
-        s += (x_array[i] - mean)**2
-    return sqrt(s / len(x_array))
+    return std(x_array)
 
 
 def get_energy(x_array):
@@ -30,10 +26,7 @@ def get_energy(x_array):
     :param x_array:
     :return:
     """
-    s = 0
-    for i in xrange(len(x_array)):
-        s += x_array[i]**2
-    return s / len(x_array)
+    return sum(power(x_array, 2.0)) / len(x_array)
 
 
 def get_correlation(x_array, y_array, x_mean, y_mean, x_sd, y_sd):
@@ -47,9 +40,7 @@ def get_correlation(x_array, y_array, x_mean, y_mean, x_sd, y_sd):
     :param y_sd:
     :return:
     """
-    s = 0
-    for i in range(len(x_array)):
-        s += (x_array[i] - x_mean)*(y_array[i] - y_mean)
+    s = sum(multiply(subtract(x_array, x_mean), subtract(y_array, y_mean)))
     return s / (len(x_array)*x_sd*y_sd)
 
 
@@ -78,10 +69,7 @@ def get_mad(x_array, x_mean):
     :param x_mean:
     :return:
     """
-    x_m_array = []
-    for value in x_array:
-        x_m_array.append(abs(value - x_mean))
-    return get_mean(x_m_array)
+    return mean(absolute(subtract(x_array, x_mean)))
 
 
 def get_features(x_acc, y_acc, z_acc, x_gyo, y_gyo, z_gyo):
@@ -108,13 +96,13 @@ def get_features(x_acc, y_acc, z_acc, x_gyo, y_gyo, z_gyo):
     y_acc_energy = get_energy(y_acc)
     z_acc_energy = get_energy(z_acc)
     
-    x_acc_std_dev = get_standard_deviation(x_acc, x_acc_mean)
-    y_acc_std_dev = get_standard_deviation(y_acc, y_acc_mean)
-    z_acc_std_dev = get_standard_deviation(z_acc, z_acc_mean)
+    x_acc_std_dev = get_standard_deviation(x_acc)
+    y_acc_std_dev = get_standard_deviation(y_acc)
+    z_acc_std_dev = get_standard_deviation(z_acc)
     
-    x_gyo_std_dev = get_standard_deviation(x_gyo, x_gyo_mean)
-    y_gyo_std_dev = get_standard_deviation(y_gyo, y_gyo_mean)
-    z_gyo_std_dev = get_standard_deviation(z_gyo, z_gyo_mean)
+    x_gyo_std_dev = get_standard_deviation(x_gyo)
+    y_gyo_std_dev = get_standard_deviation(y_gyo)
+    z_gyo_std_dev = get_standard_deviation(z_gyo)
     
     xy_acc_cor = get_correlation(x_acc, y_acc, x_acc_mean, y_acc_mean, x_acc_std_dev, y_acc_std_dev)
     xz_acc_cor = get_correlation(x_acc, z_acc, x_acc_mean, z_acc_mean, x_acc_std_dev, z_acc_std_dev)
@@ -153,9 +141,9 @@ def get_features_acceleration(x_acc, y_acc, z_acc):
     y_acc_energy = get_energy(y_acc)
     z_acc_energy = get_energy(z_acc)
 
-    x_acc_std_dev = get_standard_deviation(x_acc, x_acc_mean)
-    y_acc_std_dev = get_standard_deviation(y_acc, y_acc_mean)
-    z_acc_std_dev = get_standard_deviation(z_acc, z_acc_mean)
+    x_acc_std_dev = get_standard_deviation(x_acc)
+    y_acc_std_dev = get_standard_deviation(y_acc)
+    z_acc_std_dev = get_standard_deviation(z_acc)
 
     xy_acc_cor = get_correlation(x_acc, y_acc, x_acc_mean, y_acc_mean, x_acc_std_dev, y_acc_std_dev)
     xz_acc_cor = get_correlation(x_acc, z_acc, x_acc_mean, z_acc_mean, x_acc_std_dev, z_acc_std_dev)
@@ -217,13 +205,13 @@ def get_enhanced_features(x_acc, y_acc, z_acc, x_gyo, y_gyo, z_gyo):
     y_acc_energy = get_energy(y_acc)
     z_acc_energy = get_energy(z_acc)
 
-    x_acc_std_dev = get_standard_deviation(x_acc, x_acc_mean)
-    y_acc_std_dev = get_standard_deviation(y_acc, y_acc_mean)
-    z_acc_std_dev = get_standard_deviation(z_acc, z_acc_mean)
+    x_acc_std_dev = get_standard_deviation(x_acc)
+    y_acc_std_dev = get_standard_deviation(y_acc)
+    z_acc_std_dev = get_standard_deviation(z_acc)
 
-    x_gyo_std_dev = get_standard_deviation(x_gyo, x_gyo_mean)
-    y_gyo_std_dev = get_standard_deviation(y_gyo, y_gyo_mean)
-    z_gyo_std_dev = get_standard_deviation(z_gyo, z_gyo_mean)
+    x_gyo_std_dev = get_standard_deviation(x_gyo)
+    y_gyo_std_dev = get_standard_deviation(y_gyo)
+    z_gyo_std_dev = get_standard_deviation(z_gyo)
 
     xy_acc_cor = get_correlation(x_acc, y_acc, x_acc_mean, y_acc_mean, x_acc_std_dev, y_acc_std_dev)
     xz_acc_cor = get_correlation(x_acc, z_acc, x_acc_mean, z_acc_mean, x_acc_std_dev, z_acc_std_dev)
@@ -281,9 +269,9 @@ def get_enhanced_features_acceleration(x_acc, y_acc, z_acc):
     y_acc_energy = get_energy(y_acc)
     z_acc_energy = get_energy(z_acc)
 
-    x_acc_std_dev = get_standard_deviation(x_acc, x_acc_mean)
-    y_acc_std_dev = get_standard_deviation(y_acc, y_acc_mean)
-    z_acc_std_dev = get_standard_deviation(z_acc, z_acc_mean)
+    x_acc_std_dev = get_standard_deviation(x_acc)
+    y_acc_std_dev = get_standard_deviation(y_acc)
+    z_acc_std_dev = get_standard_deviation(z_acc)
 
     xy_acc_cor = get_correlation(x_acc, y_acc, x_acc_mean, y_acc_mean, x_acc_std_dev, y_acc_std_dev)
     xz_acc_cor = get_correlation(x_acc, z_acc, x_acc_mean, z_acc_mean, x_acc_std_dev, z_acc_std_dev)
