@@ -4,24 +4,24 @@ from django.views.generic import View
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from activity_server.controler.hidden_store_data_record_controller import store_data_record
-from activity_server.controler.fetch_data_record_controller import recognize_last_activity
 from activity_server.controler.hidden_fetch_data_record_controller import recognize_last_activities
+from activity_server.controler.hidden_fetch_data_record_controller import recognize_last_activity
 from activity_server.models import reduce_activity_vector, activity_table_json
 from activity_server.utilities.classifiers import ClassifierLoader
 
 
-class HiddenRestView(View):
+class RestView(View):
 
     classifiers = None
 
     def __init__(self, **kwargs):
-        super(HiddenRestView, self).__init__(**kwargs)
-        if HiddenRestView.classifiers is None:
-            HiddenRestView.classifiers = ClassifierLoader()
+        super(RestView, self).__init__(**kwargs)
+        if RestView.classifiers is None:
+            RestView.classifiers = ClassifierLoader()
 
     def post(self, request):
         try:
-            store_data_record(json.loads(request.body), HiddenRestView.classifiers)
+            store_data_record(json.loads(request.body), RestView.classifiers)
         except ValueError, e:
             response = HttpResponse("{error:%s}" % e.message)
             request.status_code = 404
@@ -75,4 +75,4 @@ class HiddenRestView(View):
 
     @csrf_exempt
     def dispatch(self, *args, **kwargs):
-        return super(HiddenRestView, self).dispatch(*args, **kwargs)
+        return super(RestView, self).dispatch(*args, **kwargs)

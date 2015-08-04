@@ -1,5 +1,5 @@
 from django.db import models
-from djangotoolbox.fields import ListField, DictField, EmbeddedModelField
+from djangotoolbox.fields import ListField, EmbeddedModelField
 from django_mongodb_engine.contrib import MongoDBManager
 
 activity_table = {1: "Sitting Hand",

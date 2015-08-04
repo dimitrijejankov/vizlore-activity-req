@@ -3,6 +3,26 @@ from activity_server.models import DataRecord, activity_table, activity_table_js
 from datetime import datetime, timedelta
 
 
+def recognize_last_activity(uuid, algorithm, feature_set):
+
+    record = DataRecord.objects.raw_query({'user_id': {'$eq': uuid}}).reverse()[:1]
+
+    if algorithm == 'svm' and feature_set == 'standard':
+        prob = record[0].activity.svm
+    elif algorithm == 'svm' and feature_set == 'enhanced':
+        prob = record[0].activity.svm_ech
+    elif algorithm == 'dt' and feature_set == 'standard':
+        prob = record[0].activity.dt
+    elif algorithm == 'dt' and feature_set == 'enhanced':
+        prob = record[0].activity.dt_ech
+    else:
+        raise Exception("Bad request")
+
+    current_activity = activity_table_json.get(np.argmax(prob) + 1)
+
+    return {"vector": prob, "time": record[0].date_time, "current_activity": current_activity}
+
+
 def recognize_last_activities(uuid, algorithm, feature_set, start_ts, end_ts):
 
     start_datetime = datetime.fromtimestamp(start_ts / 1e3)
