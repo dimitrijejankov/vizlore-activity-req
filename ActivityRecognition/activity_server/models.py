@@ -2,34 +2,16 @@ from django.db import models
 from djangotoolbox.fields import ListField, EmbeddedModelField
 from django_mongodb_engine.contrib import MongoDBManager
 
-activity_table = {1: "Sitting Hand",
-                  2: "Sitting Pocket",
-                  3: "Walking Hand",
-                  4: "Walking Pocket",
-                  5: "Standing Hand",
-                  6: "Standing Pocket",
-                  7: "Upstairs",
-                  8: "Downstairs"}
-
-reduced_activity_table = {
-    0: 0,
-    1: 0,
-    2: 1,
-    3: 1,
-    4: 2,
-    5: 2,
-    6: 3,
-    7: 4
-}
-
-reduced_activity_table_json = {
-    1: "sitting",
-    2: "walking",
-    3: "standing",
-    4: "upstairs",
-    5: "downstairs",
-}
-
+"""
+    1: "Sitting Hand"
+    2: "Sitting Pocket"
+    3: "Walking Hand"
+    4: "Walking Pocket"
+    5: "Standing Hand"
+    6: "Standing Pocket"
+    7: "Upstairs"
+    8: "Downstairs"
+"""
 
 activity_table_json = {
     1: "sitting",

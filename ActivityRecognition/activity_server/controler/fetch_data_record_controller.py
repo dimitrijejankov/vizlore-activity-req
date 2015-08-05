@@ -1,6 +1,6 @@
 import numpy as np
-from activity_server.models import DataRecord, activity_table, activity_table_json
-from datetime import datetime, timedelta
+from activity_server.models import DataRecord, activity_table_json
+from datetime import datetime
 
 
 def recognize_last_activity(uuid, algorithm, feature_set):

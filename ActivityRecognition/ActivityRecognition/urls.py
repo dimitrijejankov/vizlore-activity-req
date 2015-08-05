@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 from django.contrib import admin
-from activity_server.views import HomeView
+from activity_server.home_view import HomeView
 from activity_server.rest_view import RestView
 
 admin.autodiscover()

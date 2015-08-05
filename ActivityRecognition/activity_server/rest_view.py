@@ -3,9 +3,9 @@ import numpy as np
 from django.views.generic import View
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from activity_server.controler.hidden_store_data_record_controller import store_data_record
-from activity_server.controler.hidden_fetch_data_record_controller import recognize_last_activities
-from activity_server.controler.hidden_fetch_data_record_controller import recognize_last_activity
+from activity_server.controler.store_data_record_controller import store_data_record
+from activity_server.controler.fetch_data_record_controller import recognize_last_activities
+from activity_server.controler.fetch_data_record_controller import recognize_last_activity
 from activity_server.models import reduce_activity_vector, activity_table_json
 from activity_server.utilities.classifiers import ClassifierLoader
 
@@ -56,7 +56,7 @@ class RestView(View):
             response = {"date_time": unicode(record.get("time")), "uuid": uuid}
 
             if curr_act == "true":
-                response["curr_act"] = record.get("curr_act")
+                response["current_activity"] = record.get("current_activity")
             elif curr_act != "false":
                 raise Exception("Wrong value for curr_act")
 
