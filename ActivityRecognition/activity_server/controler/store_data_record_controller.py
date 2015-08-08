@@ -9,47 +9,47 @@ from activity_server.utilities.statistics import get_enhanced_features, get_enha
 
 def store_data_record(json_object, classifiers):
     if 'uuid' in json_object.keys() and \
-       'acceleration' in json_object.keys() and \
-       'gyroscope' in json_object.keys() and \
+       'data' in json_object.keys() and \
        'location' in json_object.keys() and \
        'wifi' in json_object.keys():
 
-        if json_object.get('gyroscope'):
-            t, x_acc, y_acc, z_acc, x_gyo, y_gyo, z_gyo = process_data(json_object.get('acceleration'),
-                                                                       json_object.get('gyroscope'))
+        for frame in json_object.get('data'):
+            if frame.get('gyroscope'):
+                t, x_acc, y_acc, z_acc, x_gyo, y_gyo, z_gyo = process_data(frame.get('acceleration'),
+                                                                           frame.get('gyroscope'))
 
-            data = get_features(x_acc, y_acc, z_acc, x_gyo, y_gyo, z_gyo)
-            svm = classifiers.get_classifier('svc', 'acc_gyo', 'std').predict_proba(data)[0]
-            dt = classifiers.get_classifier('dt', 'acc_gyo', 'std').predict_proba(data)[0]
+                data = get_features(x_acc, y_acc, z_acc, x_gyo, y_gyo, z_gyo)
+                svm = classifiers.get_classifier('svc', 'acc_gyo', 'std').predict_proba(data)[0]
+                dt = classifiers.get_classifier('dt', 'acc_gyo', 'std').predict_proba(data)[0]
 
-            data = get_enhanced_features(x_acc, y_acc, z_acc, x_gyo, y_gyo, z_gyo)
-            svm_ech = classifiers.get_classifier('svc', 'acc_gyo', 'ech').predict_proba(data)[0]
-            dt_ech = classifiers.get_classifier('dt', 'acc_gyo', 'ech').predict_proba(data)[0]
-        else:
-            t, x_acc, y_acc, z_acc = process_acceleration_data(json_object.get('acceleration'))
+                data = get_enhanced_features(x_acc, y_acc, z_acc, x_gyo, y_gyo, z_gyo)
+                svm_ech = classifiers.get_classifier('svc', 'acc_gyo', 'ech').predict_proba(data)[0]
+                dt_ech = classifiers.get_classifier('dt', 'acc_gyo', 'ech').predict_proba(data)[0]
+            else:
+                t, x_acc, y_acc, z_acc = process_acceleration_data(frame.get('acceleration'))
 
-            data = get_features_acceleration(x_acc, y_acc, z_acc)
-            svm = classifiers.get_classifier('svc', 'acc', 'std').predict_proba(data)[0]
-            dt = classifiers.get_classifier('dt', 'acc', 'std').predict_proba(data)[0]
+                data = get_features_acceleration(x_acc, y_acc, z_acc)
+                svm = classifiers.get_classifier('svc', 'acc', 'std').predict_proba(data)[0]
+                dt = classifiers.get_classifier('dt', 'acc', 'std').predict_proba(data)[0]
 
-            data = get_enhanced_features_acceleration(x_acc, y_acc, z_acc)
-            svm_ech = classifiers.get_classifier('svc', 'acc', 'ech').predict_proba(data)[0]
-            dt_ech = classifiers.get_classifier('dt', 'acc', 'ech').predict_proba(data)[0]
+                data = get_enhanced_features_acceleration(x_acc, y_acc, z_acc)
+                svm_ech = classifiers.get_classifier('svc', 'acc', 'ech').predict_proba(data)[0]
+                dt_ech = classifiers.get_classifier('dt', 'acc', 'ech').predict_proba(data)[0]
 
-        activity_entry = ActivityEntry(svm=svm.tolist(),
-                                       svm_ech=svm_ech.tolist(),
-                                       dt=dt.tolist(),
-                                       dt_ech=dt_ech.tolist())
+            activity_entry = ActivityEntry(svm=svm.tolist(),
+                                           svm_ech=svm_ech.tolist(),
+                                           dt=dt.tolist(),
+                                           dt_ech=dt_ech.tolist())
 
-        locations_entry = process_locations(json_object.get('location'))
-        wifi_entry = process_wifi(json_object.get('wifi'))
+            locations_entry = process_locations(json_object.get('location'))
+            wifi_entry = process_wifi(json_object.get('wifi'))
 
-        data_record = DataRecord(user_id=json_object.get('uuid'),
-                                 date_time=datetime.fromtimestamp(t[0] / 1e3),
-                                 activity=activity_entry,
-                                 wifi=wifi_entry,
-                                 location=locations_entry)
-        data_record.save()
+            data_record = DataRecord(user_id=json_object.get('uuid'),
+                                     date_time=datetime.fromtimestamp(t[0] / 1e3),
+                                     activity=activity_entry,
+                                     wifi=wifi_entry,
+                                     location=locations_entry)
+            data_record.save()
     else:
         raise Exception("Invalid json format")
 

@@ -147,24 +147,30 @@ function process_data() {
         gyroscope_frames.push(frame);
     }
 
+    var post_data = [];
+
     if (gyroscope_frames.length > 0) {
         var max_size = Math.min(acceleration_frames.length, gyroscope_frames.length);
 
         for (i = 0; i < max_size; i++) {
-            do_post(acceleration_frames[i], gyroscope_frames[i]);
-            document.getElementById('output').innerHTML = ((query_number * 100) / max_size).toString() + "% complete";
+            post_data.push({acceleration : acceleration_frames[i], gyroscope : gyroscope_frames[i]});
         }
+
+        do_post(post_data);
+        document.getElementById('output').innerHTML = "Data upload complete";
 
         min_timestamp = Math.max(acceleration[0].timestamp, gyroscope[0].timestamp);
         max_timestamp = Math.min(acceleration[acceleration.length - 1].timestamp,
-            gyroscope[acceleration.length - 1].timestamp);
+            gyroscope[gyroscope.length - 1].timestamp);
     }
     else {
+
         for (i = 0; i < acceleration_frames.length; i++) {
-            do_post(acceleration_frames[i], []);
-            document.getElementById('output').innerHTML =
-                ((query_number * 100) / acceleration_frames.length).toString() + "% complete";
+            post_data.push({acceleration : acceleration_frames[i]});
         }
+
+        do_post(post_data);
+        document.getElementById('output').innerHTML = "Data upload complete";
 
         min_timestamp = acceleration[0].timestamp;
         max_timestamp = acceleration[acceleration.length - 1].timestamp;
@@ -221,7 +227,7 @@ function recognise_activity() {
     });
 }
 
-function do_post(acceleration, gyroscope) {
+function do_post(postData) {
 
     var location = [
         {timestamp: 423611596321, coords: {latitude: 44.802416, longitude: 20.465601}},
@@ -233,7 +239,7 @@ function do_post(acceleration, gyroscope) {
         {ssids: ["Ninja2", "Turtle"], timestamp: 423611595214}
     ];
 
-    var data = {uuid: uuid, acceleration: acceleration, gyroscope: gyroscope, location: location, wifi: wifi};
+    var data = {uuid: uuid, data: postData, location: location, wifi: wifi};
     $.ajax(
         {
             url: 'ac/',
